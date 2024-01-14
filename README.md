@@ -69,3 +69,7 @@ The top content is Describe the process of photosynthesis, there is no image and
   }
 }
 ```
+
+
+Contributing
+Contributions to the QML API are welcome. Please follow the guidelines outlined in CONTRIBUTING.md to submit your contributions.
