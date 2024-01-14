@@ -4,7 +4,7 @@ Question Markup Language
 
 
 
-### Question type :
+### Question (type)
 - **Free-Text**: Allows open-ended responses.
 - **MCQ**: Multiple choice questions.
 - **Rating**: Questions that use a rating scale.
@@ -22,6 +22,11 @@ Question Markup Language
 - **Hotspot**: Questions where respondents interact with an image.
 - **Drag-and-Drop**: Interactive questions involving dragging items to match or sort.
 
+### Checking (check)
+Checking is a specific parameter for Free-Text Question, because sometimes it's kind of diffcult to check all the answers of ours students / Customers.
+We can use AI to be sure the answer of the student have the same meaning (it will result in a score in percentage )
+- 
+- PROMPT INFO
 
 # Objects & Parameters 
 
@@ -31,6 +36,10 @@ Question Markup Language
 - **minChar (Integer) (Optional)**: Minimum character limit for the answer.
 - **maxChar (Integer) (Optional)**: Maximum character limit for the answer.
 - **check (String)**: The method of answer verification for Free-Text Question Only ("AI","Keywords","Exact","Manual").
+    - **check-type (string)** : Meaning / Sentimental Analysis / Custom
+    - **sensitivity (float) (Optional)** : Only for Meaning type from 0 to 1  1 mean an exact Meaning, 0 and all answer will be accepted
+    - **sentiment (string) (Optional)** : Only for Sentimental Analysis (e.g., Postive about [SUBJECT])
+    - **prompt (string) (Optional)** : Custom Prompt (e.g., "Return Yes if the Answer didn't say Solar Panel but speak about Wind power")
 - **points (Float) (Optional)**: Points awarded for a correct answer.
 - **difficulty (String) (Optional)**: Difficulty level of the question (e.g., "easy", "medium", "hard").
 - **category (String) (Optional)**: Category or subject of the question.
