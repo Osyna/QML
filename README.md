@@ -1,8 +1,7 @@
 # QML
 Question Markup Language
 
-
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
+V0.1
 
 
 - Questionnaire (type : Quizz or Survey)
