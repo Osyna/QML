@@ -22,7 +22,7 @@ Question Markup Language
 
 # Objects & Parameters 
 
-### question (Object)
+### question
 
 - **type (String)**: The type of question (e.g., "Free-Text", "MCQ").
 - **minChar (Integer) (Optional)**: Minimum character limit for the answer.
@@ -33,6 +33,22 @@ Question Markup Language
 - **category (String) (Optional)**: Category or subject of the question.
 - **timeLimit (Integer) (Optional)**: Time limit to answer the question in seconds.
 - **version (String) (Optional)**: Version of the QML or question.
+
+
+### content
+
+- **text (String)**: The question text.
+- **multimedia (String) (Optional)**: URL to an image, video, or audio clip.
+- **answers (Array of Objects)(Optional)** : (Answer is optionnal because QML can be used to create Customer Survey or Study Survey).
+    - **answerText (String)**: Text of the answer.
+- **hints (Array of Objects) (Optional)**
+    - **hintText (String)**: Text of the hint.
+    - **cost (Float) (Optional)**: The cost of using the hint.
+- **feedback (Object) (Optional)**
+    - **correct (String) (Optional)**: Feedback for a correct answer.
+    - **incorrect (String) (Optional)**: Feedback for an incorrect answer.
+- **tags (Array of Strings) (Optional)**: Tags or keywords related to the question.
+
 
 
 # API Endpoints
