@@ -1,6 +1,10 @@
 # QML
 Question Markup Language
 
+
+[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
+
+
 - Questionnaire (type : Quizz or Survey)
     - If Survey then AI check with Sentimental Analysis enable
     - If Quizz then AI check with Meaning enable
