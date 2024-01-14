@@ -20,6 +20,21 @@ Question Markup Language
 - **Drag-and-Drop**: Interactive questions involving dragging items to match or sort.
 
 
+# Objects & Parameters 
+
+### question (Object)
+
+**type (String)**: The type of question (e.g., "Free-Text", "MCQ").
+**minChar (Integer) (Optional)**: Minimum character limit for the answer.
+**maxChar (Integer) (Optional)**: Maximum character limit for the answer.
+**check (String)**: The method of answer verification for Free-Text Question Only ("AI","Keywords","Exact","Manual").
+**points (Float) (Optional)**: Points awarded for a correct answer.
+**difficulty (String) (Optional)**: Difficulty level of the question (e.g., "easy", "medium", "hard").
+**category (String) (Optional)**: Category or subject of the question.
+**timeLimit (Integer) (Optional)**: Time limit to answer the question in seconds.
+**version (String) (Optional)**: Version of the QML or question.
+
+
 # API Endpoints
 
 ## 1. POST /questions
