@@ -1,19 +1,11 @@
 # QML
-Question Markup Language
+Question Markup Language V0.1
 
-V0.1
+QML enables the creation and management of diverse question types for quizzes, surveys, and educational assessments. This API supports a flexible and robust way to handle questions and questionnaires, including various interaction types and checking methods.
 
+API Overview
+The QML API allows for the creation and management of individual questions and question pools, as well as the assembly of these questions into structured questionnaires. It supports various question types and flexible checking methods, particularly for free-text responses.
 
-- Questionnaire (type : Quizz or Survey)
-    - If Survey then AI check with Sentimental Analysis enable
-    - If Quizz then AI check with Meaning enable
-    - Custom is enable for both
-      
-
-API we can send full questionnaire with array of Question 
-ID of the questions is set by the order
-
-We can put random order question or not.
 
 # API Call
 
