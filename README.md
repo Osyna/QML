@@ -22,10 +22,13 @@ Question Markup Language
 - **Hotspot**: Questions where respondents interact with an image.
 - **Drag-and-Drop**: Interactive questions involving dragging items to match or sort.
 
-### Checking (check)
+### Checking (check) ###
+
+-
 Checking is a specific parameter for Free-Text Question, because sometimes it's kind of diffcult to check all the answers of ours students / Customers.
-We can use AI to be sure the answer of the student have the same meaning (it will result in a score in percentage )
-- 
+We can use AI to be sure the answer of the student have the same meaning (it will result in a score in percentage) and this meaning can be check true or wrong with a 'sensitivity' from 0 to 1.
+For the sensivity set to 1, it mean an exact Meaning will result in a max points score and for 0 and all answer will be accepted and result to max points score.
+
 - PROMPT INFO
 
 # Objects & Parameters 
@@ -37,7 +40,7 @@ We can use AI to be sure the answer of the student have the same meaning (it wil
 - **maxChar (Integer) (Optional)**: Maximum character limit for the answer.
 - **check (String)**: The method of answer verification for Free-Text Question Only ("AI","Keywords","Exact","Manual").
     - **check-type (string)** : Meaning / Sentimental Analysis / Custom
-    - **sensitivity (float) (Optional)** : Only for Meaning type from 0 to 1  1 mean an exact Meaning, 0 and all answer will be accepted
+    - **sensitivity (float) (Optional)** : Only for Meaning type from 0 to 1,  1 mean an exact Meaning, 0 and all answer will be accepted
     - **sentiment (string) (Optional)** : Only for Sentimental Analysis (e.g., Postive about [SUBJECT])
     - **prompt (string) (Optional)** : Custom Prompt (e.g., "Return Yes if the Answer didn't say Solar Panel but speak about Wind power")
 - **points (Float) (Optional)**: Points awarded for a correct answer.
