@@ -24,7 +24,12 @@ Question Markup Language
 
 ## 1. POST /questions
 
-Request Body Example :
+Request Body Example
+
+This example is for a Free-Text Question  : 
+with at least 100 characters and maximum 300 characters, a difficulty set to medium, Category is Biology, 220 seconds of timeLimit, it's the first version of the questions.
+The top content is Describe the process of photosynthesis, there is no image and no video urls, a base answer, 2 hints with a different costs. The feedback for correct and incorrect answer is set. The question is tagged as Photosynthesis and Biology.
+
 ```
 {
   "question": {
@@ -35,8 +40,7 @@ Request Body Example :
     "points": 3,
     "difficulty": "medium",
     "category": "Biology",
-    "timeLimit": 60,
-    "randomizeOptions": false,
+    "timeLimit": 220,
     "version": "1.0",
     "content": {
       "text": "Describe the process of photosynthesis.",
