@@ -24,7 +24,7 @@ Question Markup Language
 
 ### Checking (check) ###
 
--
+
 Checking is a specific parameter for Free-Text Question, because sometimes it's kind of diffcult to check all the answers of ours students / Customers.
 We can use AI to be sure the answer of the student have the same meaning (it will result in a score in percentage) and this meaning can be check true or wrong with a 'sensitivity' from 0 to 1.
 For the sensivity set to 1, it mean an exact Meaning will result in a max points score and for 0 and all answer will be accepted and result to max points score.
