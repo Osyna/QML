@@ -23,3 +23,43 @@ Question Markup Language
 # API Endpoints
 
 ## 1. POST /questions
+
+Request Body Example :
+{
+  "question": {
+    "type": "Free-Text",
+    "minChar": 100,
+    "maxChar": 300,
+    "check": "AI",
+    "points": 3,
+    "difficulty": "medium",
+    "category": "Biology",
+    "timeLimit": 60,
+    "randomizeOptions": false,
+    "version": "1.0",
+    "content": {
+      "text": "Describe the process of photosynthesis.",
+      "multimedia": null,
+      "answers": [
+        {
+          "answerText": "Photosynthesis is the process plants use to convert sunlight into energy."
+        }
+      ],
+      "hints": [
+        {
+          "hintText": "It’s a process from plants",
+          "cost": 0.5
+        },
+        {
+          "hintText": "it’s linked to sun",
+          "cost": 1
+        }
+      ],
+      "feedback": {
+        "correct": "Great job!",
+        "incorrect": "Remember that photosynthesis..."
+      },
+      "tags": ["Photosynthesis", "Biology"]
+    }
+  }
+}
