@@ -20,6 +20,6 @@ Question Markup Language
 - **Drag-and-Drop**: Interactive questions involving dragging items to match or sort.
 
 
-API Endpoints
+# API Endpoints
 
-1. POST /questions
+## 1. POST /questions
