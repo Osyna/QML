@@ -1,6 +1,38 @@
 # QML
 Question Markup Language
 
+- Questionnaire (type : Quizz or Survey)
+    - If Survey then AI check with Sentimental Analysis enable
+    - If Quizz then AI check with Meaning enable
+    - Custom is enable for both
+      
+
+API we can send full questionnaire with array of Question 
+ID of the questions is set by the order
+
+We can put random order question or not.
+
+# API Call
+
+#### Question Pool
+A pool is like a folder containing list of Questions
+Contains unorganized list of Questions.
+Can be usefull to create Questionnaire by selecting Random Question from This Pool for a Specific question.
+
+
+#### Questionnaire
+- Create a Questionnaire with Questions or Empty
+- Edit Questionnaire Info and Property
+- Delete a Questionnaire
+  
+    - #### Question   
+    - Add a Question or Multiples Questions to a Questionnaire
+    - Add a Question or Multiples Questions to a a Pool/Folder of Questions
+    - Modify a Question
+    - Delete a Question from a Questionnaire or a question Pool
+
+
+
 
 
 
@@ -26,8 +58,11 @@ Question Markup Language
 
 
 Checking is a specific parameter for Free-Text Question, because sometimes it's kind of diffcult to check all the answers of ours students / Customers.
-We can use AI to be sure the answer of the student have the same meaning (it will result in a score in percentage) and this meaning can be check true or wrong with a 'sensitivity' from 0 to 1.
+- ** AI ** : We can use AI to be sure the answer of the student have the same meaning (it will result in a score in percentage) and this meaning can be check true or wrong with a 'sensitivity' from 0 to 1.
 For the sensivity set to 1, it mean an exact Meaning will result in a max points score and for 0 and all answer will be accepted and result to max points score.
+    - **Meaning**: 
+    - **Sentimental Analysis**: Sentimental Analysis is 
+    - **Custom**: 
 
 
 
