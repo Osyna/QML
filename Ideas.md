@@ -25,7 +25,18 @@ Questionnaire [GROUP of Questions]
     - simply a valited message (example for customer survey)
 
 
-Questions Path Ideas / QUestions Logic
+Questions Path Ideas / Questions Logic
+
+In Questionnaire : 
+Pool is a Tree of Question with n the amount of Answer possible
+so n paths by question
+
+Questionnaire 
+
+If a questionnaire follow a Logic Path of Questions it will use a temp / non listed pool to group the question on a certain level.
+
+Question embed a pool of question(s) (which can contain also one question) and each of these question can embed a pool of question(s)
+
 
 Questionnnaire :
 
