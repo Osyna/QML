@@ -38,12 +38,8 @@ If a questionnaire follow a Logic Path of Questions it will use a temp / non lis
 Question embed a pool of question(s) (which can contain also one question) and each of these question can embed a pool of question(s)
 
 
-Questionnnaire :
+Questionnnaire / Qpath System (Questionnaire path to Logic Graph) / Usefull for no code organization of the Questionnaire
 
-QPath System
-
-Questionnaire 
-JSON: 
     {
         "name" : "test",
         "description" : "This is test questionnaire",
