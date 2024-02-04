@@ -80,3 +80,14 @@ Questionnnaire / Qpath System (Questionnaire path to Logic Graph) / Usefull for 
             }
         ]
     }
+
+
+### type available 
+
+    - path : path to get multiple choices of path proposed base on a question answer, one path by answer 
+    - question : the type is a question 
+    - break :  break the path logic and got the next question on the parent level 
+    - end : end the questionnaire 
+    - goto :  jump to a specific path or question / label
+
+
