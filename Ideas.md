@@ -40,22 +40,47 @@ Question embed a pool of question(s) (which can contain also one question) and e
 
 Questionnnaire :
 
+QPath System
 
-    - Question 1 
-        - If Yes : Question 1A
-        - If No : QUestion 1B
-        Then Question 2C 
-        Then Question 2D
-
-    - Question 2
-        - Yes
-        - No
-
-    - Question 3
-        - Question 3A
-        - Question 3B
-            - If Yes : Question 3C
-                - Question 3D
-                - QUestion 3E
-            - If No : Go to Question 4
-    - Question 4
+Questionnaire 
+JSON: 
+    {
+        "name" : "test",
+        "description" : "This is test questionnaire",
+        "type":"Questionnaire",
+        "pool": 
+        [
+            {
+                "type":"path",
+                "question": 12, // Question ID
+                "Answers" : [
+                        "Answer1" : {
+                            "type" : "question",
+                            "question" : 16,
+                        }
+                        "Answer2" : {
+                            "type" : "path",
+                            "question" : 26,
+                            "Answers" : [
+                                "Answer1" : {
+                                    "type" : "question",
+                                    "question" : 16,
+                                }
+                                "Answer2" : {
+                                    "type" : "end" // End questionnaire
+                                },
+                                "Answer3" : {
+                                    "type" : "break" // Break Path / Go to
+                                }
+                            ]
+                        "Answer3" : {
+                            "type": "break"
+                        }
+                    ]
+            },
+            {
+                "type": "question",
+                "question" : 346
+            }
+        ]
+    }
