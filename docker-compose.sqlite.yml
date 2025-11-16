@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  # QML API with SQLite (standalone)
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: qml-api-sqlite
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DB_TYPE: sqlite
+      DB_SQLITE_PATH: /app/database/qml_database.db
+      DB_SYNCHRONIZE: "true"
+      DB_LOGGING: "false"
+    volumes:
+      - sqlite_data:/app/database
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  sqlite_data:
+    driver: local

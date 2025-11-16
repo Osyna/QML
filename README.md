@@ -3,7 +3,40 @@ Question Markup Language V0.1
 
 QML enables the creation and management of diverse question types for quizzes, surveys, and educational assessments. This API supports a flexible and robust way to handle questions and questionnaires, including various interaction types and checking methods.
 
-API Overview
+## Quick Start
+
+### Local Development (SQLite)
+```bash
+npm install
+npm run start:dev
+```
+API runs on `http://localhost:3000` with SQLite database.
+
+### Docker Deployment (PostgreSQL)
+```bash
+docker-compose up -d
+```
+API + PostgreSQL ready in production mode.
+
+### Docker Deployment (SQLite)
+```bash
+docker-compose -f docker-compose.sqlite.yml up -d
+```
+Standalone API with SQLite.
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for complete deployment guide.
+
+## Database Support
+
+QML supports multiple database backends:
+
+- **SQLite** - Default for development, file-based, zero configuration
+- **PostgreSQL** - Recommended for production, scalable and robust
+
+Configuration is done via environment variables. See [DEPLOYMENT.md](DEPLOYMENT.md) for details.
+
+## API Overview
+
 The QML API allows for the creation and management of individual questions and question pools, as well as the assembly of these questions into structured questionnaires. It supports various question types and flexible checking methods, particularly for free-text responses.
 
 

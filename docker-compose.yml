@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: qml-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: qml_user
+      POSTGRES_PASSWORD: qml_password
+      POSTGRES_DB: qml_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U qml_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # QML API
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: qml-api
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DB_TYPE: postgres
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: qml_user
+      DB_PASSWORD: qml_password
+      DB_DATABASE: qml_db
+      DB_SYNCHRONIZE: "true"
+      DB_LOGGING: "false"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  postgres_data:
+    driver: local
