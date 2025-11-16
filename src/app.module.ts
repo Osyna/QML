@@ -6,13 +6,14 @@ import { Question } from './question/entities/question.entity';
 import { QuestionPool } from './question/entities/question-pool.entity';
 import { Questionnaire } from './question/entities/questionnaire.entity';
 import { Answer } from './answer/entities/answer.entity';
+import { QuestionnaireSession } from './answer/entities/questionnaire-session.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: './database/qml_database.db',
-      entities: [Question, QuestionPool, Questionnaire, Answer],
+      entities: [Question, QuestionPool, Questionnaire, Answer, QuestionnaireSession],
       synchronize: true, // Set to false in production
       logging: false,
     }),

@@ -9,11 +9,22 @@ import { QuestionnaireController } from './questionnaire.controller';
 import { QuestionService } from './question.service';
 import { QuestionPoolService } from './question-pool.service';
 import { QuestionnaireService } from './questionnaire.service';
+import { QuestionSelectionService } from './question-selection.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Question, QuestionPool, Questionnaire])],
   controllers: [QuestionController, QuestionPoolController, QuestionnaireController],
-  providers: [QuestionService, QuestionPoolService, QuestionnaireService],
-  exports: [QuestionService, QuestionPoolService, QuestionnaireService],
+  providers: [
+    QuestionService,
+    QuestionPoolService,
+    QuestionnaireService,
+    QuestionSelectionService,
+  ],
+  exports: [
+    QuestionService,
+    QuestionPoolService,
+    QuestionnaireService,
+    QuestionSelectionService,
+  ],
 })
 export class QuestionModule {}

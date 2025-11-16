@@ -150,5 +150,47 @@ The top content is Describe the process of photosynthesis, there is no image and
 }
 ```
 
+# New Features
+
+## Session-Based Questionnaire Workflow
+
+QML now supports complete session management for taking questionnaires:
+
+- **Start Session**: Begin a questionnaire session for a user
+- **Batch Submission**: Submit all answers at once
+- **Automatic Scoring**: Get complete results with detailed breakdown
+- **Progress Tracking**: Track user progress through questions
+- **Time Tracking**: Record time spent on each question and overall
+
+See [NEW_FEATURES.md](NEW_FEATURES.md) for complete documentation.
+
+## Random Question Selection
+
+Questionnaires can now randomly select questions from pools:
+- Use `type: "RandomQuestions"` for random selection
+- Set `maxQuestions` to limit the number of questions
+- Questions are shuffled using Fisher-Yates algorithm
+
+## Auto-Hints
+
+Questions can automatically show hints when users answer incorrectly:
+- Set `autoHints: true` on questions
+- First hint shown automatically on wrong answer
+- Hint cost automatically deducted from score
+
+## Enhanced Path-Based Questionnaires
+
+Path-based questionnaires now support labels and goto:
+- Label nodes for navigation
+- Use `goto` type to jump to labeled nodes
+- Create complex branching logic
+- Support for loops and retry mechanisms
+
+# Documentation
+
+- **[API_GUIDE.md](API_GUIDE.md)**: Complete API documentation with examples
+- **[NEW_FEATURES.md](NEW_FEATURES.md)**: Detailed documentation of new features
+- **[examples.http](examples.http)**: Ready-to-use HTTP requests for testing
+
 # Contributing
 Contributions to the QML API are welcome. Please follow the guidelines outlined in CONTRIBUTING.md to submit your contributions.

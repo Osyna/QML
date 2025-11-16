@@ -226,3 +226,167 @@ GET {{baseUrl}}/answers/question/1
 
 ### Get answers for a specific questionnaire
 GET {{baseUrl}}/answers/questionnaire/1
+
+### ============================================
+### SESSION ENDPOINTS (Batch/Complete Workflow)
+### ============================================
+
+### Start a new questionnaire session
+POST {{baseUrl}}/sessions
+Content-Type: application/json
+
+{
+  "questionnaireId": 1,
+  "userId": "user123"
+}
+
+### Get session details
+GET {{baseUrl}}/sessions/1
+
+### Submit all answers for a session (batch submission)
+POST {{baseUrl}}/sessions/1/submit
+Content-Type: application/json
+
+{
+  "answers": [
+    {
+      "questionId": 1,
+      "userAnswer": "Photosynthesis is how plants convert light energy into chemical energy using chlorophyll in their leaves.",
+      "usedHints": [0],
+      "timeSpent": 120
+    },
+    {
+      "questionId": 2,
+      "userAnswer": "Mitochondria",
+      "timeSpent": 45
+    }
+  ]
+}
+
+### Get results for a completed session
+GET {{baseUrl}}/sessions/1/results
+
+### Get all sessions for a user
+GET {{baseUrl}}/sessions/user/user123
+
+### Get all sessions for a questionnaire
+GET {{baseUrl}}/sessions/questionnaire/1
+
+### ============================================
+### ADVANCED EXAMPLES
+### ============================================
+
+### Create a question with auto-hints enabled
+POST {{baseUrl}}/questions
+Content-Type: application/json
+
+{
+  "type": "Free-Text",
+  "minChar": 50,
+  "maxChar": 200,
+  "autoHints": true,
+  "check": {
+    "method": "AI",
+    "checkType": "Meaning",
+    "sensitivity": 0.6
+  },
+  "points": 10,
+  "difficulty": "medium",
+  "category": "Science",
+  "content": {
+    "text": "Explain the water cycle.",
+    "answers": [
+      {
+        "answerText": "The water cycle is the continuous movement of water on, above, and below Earth's surface through evaporation, condensation, and precipitation."
+      }
+    ],
+    "hints": [
+      {
+        "hintText": "Think about evaporation and precipitation",
+        "cost": 2
+      },
+      {
+        "hintText": "It involves the movement of water between earth and atmosphere",
+        "cost": 1
+      }
+    ],
+    "feedback": {
+      "correct": "Excellent explanation!",
+      "incorrect": "Consider the main processes: evaporation, condensation, and precipitation."
+    },
+    "tags": ["Water Cycle", "Science", "Earth Science"]
+  }
+}
+
+### Create a Random Questions questionnaire
+POST {{baseUrl}}/questionnaires
+Content-Type: application/json
+
+{
+  "name": "Random Science Quiz",
+  "description": "Get 5 random questions from the science pool",
+  "type": "RandomQuestions",
+  "maxQuestions": 5,
+  "pool": [
+    {"type": "question", "question": 1},
+    {"type": "question", "question": 2},
+    {"type": "question", "question": 3},
+    {"type": "question", "question": 4},
+    {"type": "question", "question": 5},
+    {"type": "question", "question": 6},
+    {"type": "question", "question": 7},
+    {"type": "question", "question": 8},
+    {"type": "question", "question": 9},
+    {"type": "question", "question": 10}
+  ],
+  "difficulty": "medium",
+  "category": "Science",
+  "timeLimit": 600,
+  "points": 50,
+  "passPercentage": 70,
+  "passText": "Well done! You passed the quiz!",
+  "failText": "Keep studying! You can try again.",
+  "showResult": true,
+  "showFeedback": true,
+  "showScore": true
+}
+
+### Create a path-based questionnaire with labels and goto
+POST {{baseUrl}}/questionnaires
+Content-Type: application/json
+
+{
+  "name": "Adaptive Learning Path",
+  "description": "Quiz that adapts based on your answers",
+  "type": "PathBased",
+  "pool": [
+    {
+      "type": "path",
+      "question": 1,
+      "label": "difficulty_check",
+      "answers": {
+        "Beginner": {
+          "type": "question",
+          "question": 2,
+          "label": "beginner_section"
+        },
+        "Intermediate": {
+          "type": "question",
+          "question": 5,
+          "label": "intermediate_section"
+        },
+        "Advanced": {
+          "type": "question",
+          "question": 8,
+          "label": "advanced_section"
+        },
+        "Retry": {
+          "type": "goto",
+          "gotoLabel": "difficulty_check"
+        }
+      }
+    }
+  ],
+  "showResult": true,
+  "showFeedback": true
+}

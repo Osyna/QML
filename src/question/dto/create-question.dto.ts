@@ -4,6 +4,7 @@ import {
   IsNumber,
   IsString,
   IsObject,
+  IsBoolean,
   ValidateNested,
   Min,
   Max,
@@ -36,6 +37,10 @@ export class CreateQuestionDto {
   @IsNumber()
   @Min(0)
   points?: number;
+
+  @IsOptional()
+  @IsBoolean()
+  autoHints?: boolean;
 
   @IsOptional()
   @IsEnum(Difficulty)

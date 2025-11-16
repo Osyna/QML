@@ -58,6 +58,9 @@ export class Question {
   @Column({ type: 'real', nullable: true })
   points?: number;
 
+  @Column({ nullable: true, default: false })
+  autoHints?: boolean;
+
   @Column({
     type: 'varchar',
     enum: Difficulty,
