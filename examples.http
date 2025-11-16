@@ -1,0 +1,392 @@
+### QML API Examples
+### Use with REST Client VSCode extension or similar
+
+@baseUrl = http://localhost:3000
+
+### Create a Free-Text Question with AI Checking
+POST {{baseUrl}}/questions
+Content-Type: application/json
+
+{
+  "type": "Free-Text",
+  "minChar": 100,
+  "maxChar": 300,
+  "check": {
+    "method": "AI",
+    "checkType": "Meaning",
+    "sensitivity": 0.7
+  },
+  "points": 10,
+  "difficulty": "medium",
+  "category": "Biology",
+  "timeLimit": 220,
+  "version": "1.0",
+  "content": {
+    "text": "Describe the process of photosynthesis.",
+    "multimedia": null,
+    "answers": [
+      {
+        "answerText": "Photosynthesis is the process plants use to convert sunlight into energy using chlorophyll."
+      }
+    ],
+    "hints": [
+      {
+        "hintText": "It's a process from plants",
+        "cost": 0.5
+      },
+      {
+        "hintText": "it's linked to sun",
+        "cost": 1
+      }
+    ],
+    "feedback": {
+      "correct": "Great job!",
+      "incorrect": "Remember that photosynthesis involves sunlight, water, and carbon dioxide."
+    },
+    "tags": ["Photosynthesis", "Biology"]
+  }
+}
+
+### Create an MCQ Question
+POST {{baseUrl}}/questions
+Content-Type: application/json
+
+{
+  "type": "MCQ",
+  "check": {
+    "method": "Exact"
+  },
+  "points": 5,
+  "difficulty": "easy",
+  "category": "Biology",
+  "timeLimit": 60,
+  "content": {
+    "text": "What is the powerhouse of the cell?",
+    "answers": [
+      {
+        "answerText": "Mitochondria",
+        "isCorrect": true
+      },
+      {
+        "answerText": "Nucleus",
+        "isCorrect": false
+      },
+      {
+        "answerText": "Ribosome",
+        "isCorrect": false
+      }
+    ],
+    "feedback": {
+      "correct": "Correct! Mitochondria are the powerhouse of the cell.",
+      "incorrect": "Incorrect. The mitochondria is the powerhouse of the cell."
+    },
+    "tags": ["Cell Biology"]
+  }
+}
+
+### Get all questions
+GET {{baseUrl}}/questions
+
+### Get questions by category
+GET {{baseUrl}}/questions?category=Biology
+
+### Get a specific question
+GET {{baseUrl}}/questions/1
+
+### Update a question
+PATCH {{baseUrl}}/questions/1
+Content-Type: application/json
+
+{
+  "points": 12
+}
+
+### Delete a question
+DELETE {{baseUrl}}/questions/1
+
+### Create a Question Pool
+POST {{baseUrl}}/question-pools
+Content-Type: application/json
+
+{
+  "name": "Biology Questions Pool",
+  "description": "A collection of biology questions for exams",
+  "tags": ["Biology", "Science", "Exam"],
+  "pool": [1, 2],
+  "difficulty": "medium",
+  "category": "Biology"
+}
+
+### Get all question pools
+GET {{baseUrl}}/question-pools
+
+### Add questions to a pool
+POST {{baseUrl}}/question-pools/1/questions
+Content-Type: application/json
+
+{
+  "questionIds": [3, 4, 5]
+}
+
+### Create a simple Questionnaire
+POST {{baseUrl}}/questionnaires
+Content-Type: application/json
+
+{
+  "name": "Biology Exam",
+  "description": "Final exam for Biology 101",
+  "type": "Questionnaire",
+  "pool": [
+    {
+      "type": "question",
+      "question": 1
+    },
+    {
+      "type": "question",
+      "question": 2
+    }
+  ],
+  "difficulty": "medium",
+  "category": "Biology",
+  "timeLimit": 1800,
+  "points": 100,
+  "passPercentage": 70,
+  "passText": "Congratulations! You passed the exam.",
+  "failText": "You need to study more. Try again!",
+  "showResult": true,
+  "showFeedback": true,
+  "showScore": true
+}
+
+### Create a Path-Based Questionnaire
+POST {{baseUrl}}/questionnaires
+Content-Type: application/json
+
+{
+  "name": "Adaptive Learning Quiz",
+  "description": "A quiz that adapts to your skill level",
+  "type": "PathBased",
+  "pool": [
+    {
+      "type": "path",
+      "question": 1,
+      "answers": {
+        "Beginner": {
+          "type": "question",
+          "question": 2
+        },
+        "Intermediate": {
+          "type": "question",
+          "question": 3
+        },
+        "Advanced": {
+          "type": "question",
+          "question": 4
+        }
+      }
+    }
+  ],
+  "showResult": true,
+  "showFeedback": true
+}
+
+### Get all questionnaires
+GET {{baseUrl}}/questionnaires
+
+### Get a specific questionnaire
+GET {{baseUrl}}/questionnaires/1
+
+### Get next question in a path-based questionnaire (first question)
+GET {{baseUrl}}/questionnaires/1/next-question
+
+### Get next question based on previous answer
+GET {{baseUrl}}/questionnaires/1/next-question?currentQuestionId=1&userAnswer=Beginner
+
+### Submit an Answer
+POST {{baseUrl}}/answers
+Content-Type: application/json
+
+{
+  "questionId": 1,
+  "questionnaireId": 1,
+  "userId": "user123",
+  "userAnswer": "Photosynthesis is how plants convert light energy into chemical energy using chlorophyll in their leaves.",
+  "usedHints": [0],
+  "timeSpent": 120
+}
+
+### Get all answers
+GET {{baseUrl}}/answers
+
+### Get answers by user
+GET {{baseUrl}}/answers?userId=user123
+
+### Get answers for a specific question
+GET {{baseUrl}}/answers/question/1
+
+### Get answers for a specific questionnaire
+GET {{baseUrl}}/answers/questionnaire/1
+
+### ============================================
+### SESSION ENDPOINTS (Batch/Complete Workflow)
+### ============================================
+
+### Start a new questionnaire session
+POST {{baseUrl}}/sessions
+Content-Type: application/json
+
+{
+  "questionnaireId": 1,
+  "userId": "user123"
+}
+
+### Get session details
+GET {{baseUrl}}/sessions/1
+
+### Submit all answers for a session (batch submission)
+POST {{baseUrl}}/sessions/1/submit
+Content-Type: application/json
+
+{
+  "answers": [
+    {
+      "questionId": 1,
+      "userAnswer": "Photosynthesis is how plants convert light energy into chemical energy using chlorophyll in their leaves.",
+      "usedHints": [0],
+      "timeSpent": 120
+    },
+    {
+      "questionId": 2,
+      "userAnswer": "Mitochondria",
+      "timeSpent": 45
+    }
+  ]
+}
+
+### Get results for a completed session
+GET {{baseUrl}}/sessions/1/results
+
+### Get all sessions for a user
+GET {{baseUrl}}/sessions/user/user123
+
+### Get all sessions for a questionnaire
+GET {{baseUrl}}/sessions/questionnaire/1
+
+### ============================================
+### ADVANCED EXAMPLES
+### ============================================
+
+### Create a question with auto-hints enabled
+POST {{baseUrl}}/questions
+Content-Type: application/json
+
+{
+  "type": "Free-Text",
+  "minChar": 50,
+  "maxChar": 200,
+  "autoHints": true,
+  "check": {
+    "method": "AI",
+    "checkType": "Meaning",
+    "sensitivity": 0.6
+  },
+  "points": 10,
+  "difficulty": "medium",
+  "category": "Science",
+  "content": {
+    "text": "Explain the water cycle.",
+    "answers": [
+      {
+        "answerText": "The water cycle is the continuous movement of water on, above, and below Earth's surface through evaporation, condensation, and precipitation."
+      }
+    ],
+    "hints": [
+      {
+        "hintText": "Think about evaporation and precipitation",
+        "cost": 2
+      },
+      {
+        "hintText": "It involves the movement of water between earth and atmosphere",
+        "cost": 1
+      }
+    ],
+    "feedback": {
+      "correct": "Excellent explanation!",
+      "incorrect": "Consider the main processes: evaporation, condensation, and precipitation."
+    },
+    "tags": ["Water Cycle", "Science", "Earth Science"]
+  }
+}
+
+### Create a Random Questions questionnaire
+POST {{baseUrl}}/questionnaires
+Content-Type: application/json
+
+{
+  "name": "Random Science Quiz",
+  "description": "Get 5 random questions from the science pool",
+  "type": "RandomQuestions",
+  "maxQuestions": 5,
+  "pool": [
+    {"type": "question", "question": 1},
+    {"type": "question", "question": 2},
+    {"type": "question", "question": 3},
+    {"type": "question", "question": 4},
+    {"type": "question", "question": 5},
+    {"type": "question", "question": 6},
+    {"type": "question", "question": 7},
+    {"type": "question", "question": 8},
+    {"type": "question", "question": 9},
+    {"type": "question", "question": 10}
+  ],
+  "difficulty": "medium",
+  "category": "Science",
+  "timeLimit": 600,
+  "points": 50,
+  "passPercentage": 70,
+  "passText": "Well done! You passed the quiz!",
+  "failText": "Keep studying! You can try again.",
+  "showResult": true,
+  "showFeedback": true,
+  "showScore": true
+}
+
+### Create a path-based questionnaire with labels and goto
+POST {{baseUrl}}/questionnaires
+Content-Type: application/json
+
+{
+  "name": "Adaptive Learning Path",
+  "description": "Quiz that adapts based on your answers",
+  "type": "PathBased",
+  "pool": [
+    {
+      "type": "path",
+      "question": 1,
+      "label": "difficulty_check",
+      "answers": {
+        "Beginner": {
+          "type": "question",
+          "question": 2,
+          "label": "beginner_section"
+        },
+        "Intermediate": {
+          "type": "question",
+          "question": 5,
+          "label": "intermediate_section"
+        },
+        "Advanced": {
+          "type": "question",
+          "question": 8,
+          "label": "advanced_section"
+        },
+        "Retry": {
+          "type": "goto",
+          "gotoLabel": "difficulty_check"
+        }
+      }
+    }
+  ],
+  "showResult": true,
+  "showFeedback": true
+}

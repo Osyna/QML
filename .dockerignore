@@ -1,0 +1,53 @@
+# Dependencies
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Build output
+dist
+build
+
+# Tests
+coverage
+.nyc_output
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.local
+.env.*.local
+.env.development
+.env.test
+
+# Database
+database/*.db
+database/*.db-*
+
+# Git
+.git
+.gitignore
+
+# Documentation (keep in image)
+# README.md
+# API.md
+
+# Docker
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# Misc
+*.md
+!README.md
+!API_GUIDE.md
+!NEW_FEATURES.md
