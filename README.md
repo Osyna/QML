@@ -1,154 +1,653 @@
-# QML
-Question Markup Language V0.1
+# QML - Question Markup Language API
 
-QML enables the creation and management of diverse question types for quizzes, surveys, and educational assessments. This API supports a flexible and robust way to handle questions and questionnaires, including various interaction types and checking methods.
+<div align="center">
 
-API Overview
-The QML API allows for the creation and management of individual questions and question pools, as well as the assembly of these questions into structured questionnaires. It supports various question types and flexible checking methods, particularly for free-text responses.
+![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+![NestJS](https://img.shields.io/badge/NestJS-10.3.0-red.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.3.3-blue.svg)
 
+**A comprehensive questionnaire and assessment platform with AI-powered validation**
 
-# API Call
+[Features](#features) • [Quick Start](#quick-start) • [API Documentation](#api-documentation) • [Deployment](#deployment)
 
-#### Question Pool
-A pool is like a folder containing list of Questions
-Contains unorganized list of Questions.
-Can be usefull to create Questionnaire by selecting Random Question from This Pool for a Specific question.
-- Create an Empty Pool or a Pool With Questions
-- 
+</div>
 
-#### Questionnaire
-- Create a Questionnaire with Questions or Empty
-- Edit Questionnaire Info and Property
-- Delete a Questionnaire
-  
-    - #### Question   
-    - Add a Question or Multiples Questions to a Questionnaire
-    - Add a Question or Multiples Questions to a a Pool/Folder of Questions
-    - Modify a Question
-    - Delete a Question from a Questionnaire or a question Pool
+---
 
+## 📋 Table of Contents
 
+- [Overview](#overview)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Quick Start](#quick-start)
+- [API Documentation](#api-documentation)
+- [Deployment](#deployment)
+- [Configuration](#configuration)
+- [Project Structure](#project-structure)
+- [Contributing](#contributing)
+- [License](#license)
 
+---
 
+## 🎯 Overview
 
+QML (Question Markup Language) is a powerful, enterprise-grade API for creating, managing, and delivering questionnaires, quizzes, and educational assessments. Built with NestJS and TypeScript, it provides a flexible and robust platform for educational institutions, training providers, and market researchers.
 
-### Question (type)
-- **Free-Text**: Allows open-ended responses.
-- **MCQ**: Multiple choice questions.
-- **Rating**: Questions that use a rating scale.
-- **Likert**: Questions based on the Likert scale.
-- **Yes-No**: Simple yes or no questions.
-- **Ranking**: Questions where items need to be ranked in order.
-- **Matching**: Questions that involve matching items from two sets.
-- **Fill-in-the-Blank**: Questions with a blank space to be filled in by the respondent.
-- **Picture-Choice**: Questions where the answers are images.
-- **Slider**: Questions using a slider for responses.
-- **Dropdown**: Questions that provide a dropdown menu for answer selection.
-- **Semantic-Differential**: Questions that measure reactions using bipolar scales.
-- **Matrix**: Questions presented in a grid format (similar to Likert scale questions).
-- **Demographic**: Questions used to gather demographic information.
-- **Hotspot**: Questions where respondents interact with an image.
-- **Drag-and-Drop**: Interactive questions involving dragging items to match or sort.
+### Why QML?
 
-### Checking (check) ###
+- **17+ Question Types**: From simple MCQs to complex drag-and-drop interactions
+- **AI-Powered Validation**: Intelligent answer checking using OpenAI or Anthropic
+- **Adaptive Paths**: Branching questionnaire logic based on user responses
+- **Real-Time Features**: WebSocket support for live quiz sessions and leaderboards
+- **Enterprise Ready**: Complete with authentication, analytics, versioning, and more
 
+---
 
-Checking is a specific parameter for **Free-Text Question**, because sometimes it's kind of diffcult to check all the answers of ours students / Customers.
-- **AI** : We can use AI to be sure the answer of the student have the same meaning (it will result in a score in percentage) and this meaning can be check true or wrong with a 'sensitivity' from 0 to 1.
-For the sensivity set to 1, it mean an exact Meaning will result in a max points score and for 0 and all answer will be accepted and result to max points score.
-    - **Meaning**: Check if the meaning of the user answer is the same as the answer.
-        - **sensitivity**: Set a sensivity from 0 to 1, 1 meaning an exact Meaning and 0 all answer will be accepted. 
-    - **Custom**: 
-        - **prompt** : Custom prompt to check the answer, you can make your own sentimental analysis prompt to get your user/customer answer sentiment.
-- **Keywords** : The user Answer must contains Keywords or exact sentences. Return points / count of keywords.
-- **Exact** : The user Answer must be exactly like the answer.
-- **Manual** : The check is manual, on the corrector side.
+## ✨ Features
 
+### Core Functionality
 
+#### 📝 Question Management
+- **17+ Question Types** including:
+  - Free-Text, Multiple Choice, True/False
+  - Rating Scale, Likert Scale, Yes/No
+  - Ranking, Matching, Fill-in-the-Blank
+  - Picture Choice, Slider, Dropdown
+  - Semantic Differential, Matrix, Demographic
+  - Hotspot, Drag-and-Drop
+- **Question Pools**: Organize questions into reusable pools
+- **Version Control**: Automatic question versioning with diff tracking
+- **Search & Filter**: Advanced filtering by difficulty, category, tags, etc.
+- **Statistics**: Track performance, success rates, and time spent
 
-# Objects & Parameters 
+#### 📊 Questionnaire Features
+- **Multiple Types**: Standard, Survey, Random Questions, Adaptive Paths
+- **Path Logic**: Branching questionnaires based on user answers
+- **Time Limits**: Per question and per questionnaire
+- **Passing Criteria**: Set pass percentages or point thresholds
+- **Availability Control**: Schedule questionnaires with start/end dates
+- **Randomization**: Random question selection and ordering
 
-### question
+#### 🤖 AI Integration
+- **Answer Validation**: 4 validation strategies
+  - **Exact Match**: Case-insensitive string comparison
+  - **Keyword Matching**: Partial credit for keyword presence
+  - **AI Semantic**: Meaning-based validation with confidence scores
+  - **Manual Review**: Educator review workflow
+- **Custom Prompts**: Use custom AI prompts for specialized validation
+- **Question Generation**: AI-powered question creation
+- **Feedback Generation**: Personalized, AI-generated feedback
+- **Sentiment Analysis**: Analyze user responses
+- **Multi-Provider**: Support for OpenAI and Anthropic
 
-- **type (String)**: The type of question (e.g., "Free-Text", "MCQ").
-- **minChar (Integer) (Optional)**: Minimum character limit for the answer.
-- **maxChar (Integer) (Optional)**: Maximum character limit for the answer.
-- **check (String)**: The method of answer verification for Free-Text Question Only ("AI","Keywords","Exact","Manual").
-    - **check-type (string)** : Meaning / Sentimental Analysis / Custom
-    - **sensitivity (float) (Optional)** : Only for Meaning type from 0 to 1,  1 mean an exact Meaning, 0 and all answer will be accepted
-    - **prompt (string) (Optional)** : Custom Prompt (e.g., "Return Yes if the Answer didn't say Solar Panel but speak about Wind power")
-- **points (Float) (Optional)**: Points awarded for a correct answer.
-- **difficulty (String) (Optional)**: Difficulty level of the question (e.g., "easy", "medium", "hard").
-- **category (String) (Optional)**: Category or subject of the question.
-- **timeLimit (Integer) (Optional)**: Time limit to answer the question in seconds.
-- **version (String) (Optional)**: Version of the QML or question.
+#### 👥 User Management & Authentication
+- **JWT Authentication**: Secure token-based auth
+- **Role-Based Access Control**: Admin, Educator, Student, Guest
+- **User Profiles**: Customizable profiles with preferences
+- **Activity Tracking**: Last login, attempt history
 
+#### 📈 Analytics & Reporting
+- **Question Statistics**: Success rates, averages, discrimination index
+- **Difficulty Analysis**: Evidence-based difficulty classification
+- **Performance Trends**: Temporal analysis with regression
+- **User Analytics**: Individual and aggregate performance metrics
+- **Completion Tracking**: Drop-off points and abandonment analysis
+- **Leaderboards**: Real-time rankings in live sessions
 
-### content
+#### 🔄 Import/Export
+- **Multiple Formats**:
+  - **JSON**: Full-featured export with metadata
+  - **CSV**: Spreadsheet-compatible format
+  - **QTI (IMS 2.1)**: LMS integration standard
+  - **GIFT**: Moodle-compatible format
+- **Bulk Operations**: Import/export multiple questions at once
+- **Validation**: Comprehensive import data validation
 
-- **text (String)**: The question text.
-- **multimedia (String) (Optional)**: URL to an image, video, or audio clip.
-- **answers (Array of Objects)(Optional)** : (Answer is optionnal because QML can be used to create Customer Survey or Study Survey).
-    - **answerText (String)**: Text of the answer.
-- **hints (Array of Objects) (Optional)**
-    - **hintText (String)**: Text of the hint.
-    - **cost (Float) (Optional)**: The cost of using the hint.
-- **feedback (Object) (Optional)**
-    - **correct (String) (Optional)**: Feedback for a correct answer.
-    - **incorrect (String) (Optional)**: Feedback for an incorrect answer.
-- **tags (Array of Strings) (Optional)**: Tags or keywords related to the question.
+#### ⚡ Real-Time Features
+- **WebSocket Gateway**: Live quiz sessions
+- **Real-Time Leaderboards**: Updated as answers are submitted
+- **Live Synchronization**: Question progression across participants
+- **Session Management**: Room-based quiz sessions
+- **Participant Tracking**: Join/leave notifications
 
+#### 🔐 Security & Validation
+- **Input Validation**: class-validator decorators on all DTOs
+- **Error Handling**: Global exception filter with detailed errors
+- **Rate Limiting**: Configurable request throttling
+- **CORS Support**: Configurable cross-origin access
+- **SQL Injection Prevention**: TypeORM parameterized queries
 
+---
 
-# API Endpoints
+## 🏗️ Architecture
 
-## 1. POST /questions
+### Technology Stack
 
-Request Body Example
+- **Framework**: NestJS 10.3
+- **Language**: TypeScript 5.3
+- **Database**: SQLite (dev) / PostgreSQL (production)
+- **ORM**: TypeORM 0.3
+- **Caching**: Redis with cache-manager
+- **Authentication**: Passport JWT
+- **Validation**: class-validator & class-transformer
+- **API Documentation**: Swagger/OpenAPI
+- **WebSockets**: Socket.IO
+- **AI Integration**: OpenAI SDK, Anthropic SDK
 
-This example is for a Free-Text Question  : 
-with at least 100 characters and maximum 300 characters, a difficulty set to medium, Category is Biology, 220 seconds of timeLimit, it's the first version of the questions.
-The top content is Describe the process of photosynthesis, there is no image and no video urls, a base answer, 2 hints with a different costs. The feedback for correct and incorrect answer is set. The question is tagged as Photosynthesis and Biology.
+### Design Patterns
 
+- **Modular Architecture**: Feature-based modules
+- **Repository Pattern**: TypeORM repositories
+- **DTO Pattern**: Data transfer objects with validation
+- **Guard Pattern**: Authentication and authorization guards
+- **Strategy Pattern**: Multiple validation strategies
+- **Factory Pattern**: Configuration and services
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js 18+ and npm
+- Redis (optional, for caching)
+- PostgreSQL (optional, for production)
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/QML.git
+cd QML
+
+# Install dependencies
+npm install
+
+# Copy environment variables
+cp .env.example .env
+
+# Edit .env with your configuration
+# Minimum required: JWT_SECRET, AI API keys
 ```
+
+### Configuration
+
+Edit `.env` file:
+
+```env
+# Application
+NODE_ENV=development
+PORT=3000
+
+# Database (SQLite for development)
+DB_TYPE=sqlite
+DB_DATABASE=./database/qml_database.db
+
+# JWT Authentication (CHANGE THIS!)
+JWT_SECRET=your-super-secret-jwt-key-change-this
+JWT_EXPIRATION=24h
+
+# AI Integration (at least one required)
+AI_PROVIDER=openai
+OPENAI_API_KEY=sk-your-key-here
+# ANTHROPIC_API_KEY=sk-ant-your-key-here
+
+# Optional: Redis Cache
+# REDIS_HOST=localhost
+# REDIS_PORT=6379
+
+# Optional: CORS
+CORS_ORIGIN=http://localhost:3001
+```
+
+### Running the Application
+
+```bash
+# Development mode with hot reload
+npm run start:dev
+
+# Production mode
+npm run build
+npm run start:prod
+
+# Debug mode
+npm run start:debug
+```
+
+The API will be available at:
+- **API**: http://localhost:3000/api
+- **Swagger Docs**: http://localhost:3000/api/docs
+
+### Using Docker
+
+```bash
+# Development with Docker Compose
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+
+# Production with Docker Compose
+docker-compose up -d
+
+# Build and run standalone
+docker build -t qml-api .
+docker run -p 3000:3000 --env-file .env qml-api
+```
+
+---
+
+## 📚 API Documentation
+
+### Interactive Documentation
+
+Once the server is running, visit **http://localhost:3000/api/docs** for complete interactive API documentation powered by Swagger.
+
+### Quick API Overview
+
+All API endpoints are prefixed with `/api`.
+
+#### Authentication
+
+```bash
+# Register new user
+POST /api/auth/register
 {
-  "question": {
-    "type": "Free-Text",
-    "minChar": 100,
-    "maxChar": 300,
-    "check": "AI",
-    "points": 3,
-    "difficulty": "medium",
-    "category": "Biology",
-    "timeLimit": 220,
-    "version": "1.0",
-    "content": {
-      "text": "Describe the process of photosynthesis.",
-      "multimedia": null,
-      "answers": [
-        {
-          "answerText": "Photosynthesis is the process plants use to convert sunlight into energy."
-        }
-      ],
-      "hints": [
-        {
-          "hintText": "It’s a process from plants",
-          "cost": 0.5
-        },
-        {
-          "hintText": "it’s linked to sun",
-          "cost": 1
-        }
-      ],
-      "feedback": {
-        "correct": "Great job!",
-        "incorrect": "Remember that photosynthesis..."
-      },
-      "tags": ["Photosynthesis", "Biology"]
+  "email": "user@example.com",
+  "password": "SecurePass123!",
+  "passwordConfirmation": "SecurePass123!",
+  "firstName": "John",
+  "lastName": "Doe"
+}
+
+# Login
+POST /api/auth/login
+{
+  "email": "user@example.com",
+  "password": "SecurePass123!"
+}
+
+# Response includes access_token
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIs...",
+  "user": { ... }
+}
+
+# Get profile (requires Bearer token)
+GET /api/auth/profile
+Authorization: Bearer <access_token>
+```
+
+#### Questions
+
+```bash
+# Create question (Educator/Admin only)
+POST /api/questions
+Authorization: Bearer <token>
+{
+  "type": "multiple-choice",
+  "difficulty": "medium",
+  "category": "Mathematics",
+  "points": 1,
+  "content": {
+    "text": "What is 2 + 2?",
+    "answers": [
+      { "answerText": "3", "isCorrect": false },
+      { "answerText": "4", "isCorrect": true, "points": 1 },
+      { "answerText": "5", "isCorrect": false }
+    ],
+    "feedback": {
+      "correct": "Excellent!",
+      "incorrect": "Try again!"
     }
+  }
+}
+
+# List questions with filters
+GET /api/questions?page=1&limit=10&difficulty=medium&category=Mathematics
+
+# Get question by ID
+GET /api/questions/1
+
+# Update question (Owner/Admin)
+PATCH /api/questions/1
+
+# Delete question (Owner/Admin)
+DELETE /api/questions/1
+```
+
+#### Questionnaires
+
+```bash
+# Create questionnaire
+POST /api/questionnaires
+{
+  "name": "Math Quiz",
+  "description": "Basic mathematics assessment",
+  "type": "questions-answers",
+  "difficulty": "medium",
+  "timeLimit": 1800,
+  "passPercentage": 70
+}
+
+# Add questions to questionnaire
+POST /api/questionnaires/1/questions
+{
+  "questionIds": [1, 2, 3, 4, 5]
+}
+
+# List available questionnaires
+GET /api/questionnaires?isActive=true
+```
+
+#### Answer Submission
+
+```bash
+# Start questionnaire attempt
+POST /api/answers/attempts/start
+{
+  "questionnaireId": 1
+}
+
+# Submit answer
+POST /api/answers/attempts/1/answers
+{
+  "questionId": 5,
+  "userAnswer": "4",
+  "timeSpent": 30
+}
+
+# Complete attempt
+POST /api/answers/attempts/1/complete
+{
+  "timeSpent": 1800
+}
+
+# Get my attempts
+GET /api/answers/attempts/my-attempts
+```
+
+#### Analytics
+
+```bash
+# Question statistics (Educator/Admin)
+GET /api/analytics/questions/1
+
+# Questionnaire statistics
+GET /api/analytics/questionnaires/1
+
+# User performance
+GET /api/analytics/users/me
+
+# Difficulty analysis
+GET /api/analytics/questions/1/difficulty
+```
+
+#### Import/Export
+
+```bash
+# Export questions to JSON
+POST /api/import-export/questions/export
+{
+  "questionIds": [1, 2, 3],
+  "format": "json"
+}
+
+# Import questions from file
+POST /api/import-export/questions/import?format=json
+Content-Type: multipart/form-data
+file: <questions.json>
+```
+
+#### WebSocket Real-Time Quiz
+
+```javascript
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:3000/quiz', {
+  auth: { token: 'your-jwt-token' }
+});
+
+// Join quiz
+socket.emit('join-quiz', {
+  questionnaireId: 1,
+  attemptId: 123
+});
+
+// Listen for leaderboard
+socket.on('leaderboard-update', (data) => {
+  console.log('Leaderboard:', data);
+});
+
+// Submit answer
+socket.emit('submit-answer', {
+  attemptId: 123,
+  questionId: 5,
+  userAnswer: 'Paris'
+});
+```
+
+### API Response Format
+
+All API responses follow a consistent structure:
+
+**Success Response:**
+```json
+{
+  "statusCode": 200,
+  "data": { ... },
+  "meta": {
+    "page": 1,
+    "limit": 10,
+    "total": 100,
+    "totalPages": 10
   }
 }
 ```
 
-# Contributing
-Contributions to the QML API are welcome. Please follow the guidelines outlined in CONTRIBUTING.md to submit your contributions.
+**Error Response:**
+```json
+{
+  "statusCode": 400,
+  "timestamp": "2024-01-01T00:00:00.000Z",
+  "path": "/api/questions",
+  "method": "POST",
+  "message": "Validation failed",
+  "errors": [
+    {
+      "field": "type",
+      "constraints": { ... }
+    }
+  ]
+}
+```
+
+---
+
+## 🚢 Deployment
+
+### Docker Deployment (Recommended)
+
+```bash
+# 1. Configure environment
+cp .env.example .env
+# Edit .env with production values
+
+# 2. Start services
+docker-compose up -d
+
+# 3. Check status
+docker-compose ps
+
+# 4. View logs
+docker-compose logs -f api
+```
+
+### Manual Deployment
+
+```bash
+# 1. Build the application
+npm run build
+
+# 2. Set production environment
+export NODE_ENV=production
+
+# 3. Run migrations (if using PostgreSQL)
+npm run migration:run
+
+# 4. Start the server
+npm run start:prod
+```
+
+### Production Checklist
+
+- [ ] Change `JWT_SECRET` to a strong random value
+- [ ] Set `NODE_ENV=production`
+- [ ] Use PostgreSQL instead of SQLite
+- [ ] Configure Redis for caching
+- [ ] Set up proper CORS origins
+- [ ] Enable HTTPS/SSL
+- [ ] Set up monitoring and logging
+- [ ] Configure backup strategy for database
+- [ ] Set appropriate rate limits
+- [ ] Review and secure API keys
+
+---
+
+## ⚙️ Configuration
+
+### Environment Variables
+
+| Variable | Description | Default | Required |
+|----------|-------------|---------|----------|
+| `NODE_ENV` | Environment | `development` | No |
+| `PORT` | Server port | `3000` | No |
+| `DB_TYPE` | Database type (`sqlite` or `postgres`) | `sqlite` | No |
+| `DB_HOST` | PostgreSQL host | `localhost` | If postgres |
+| `DB_PORT` | PostgreSQL port | `5432` | If postgres |
+| `DB_USERNAME` | Database user | - | If postgres |
+| `DB_PASSWORD` | Database password | - | If postgres |
+| `DB_DATABASE` | Database name | `./database/qml_database.db` | Yes |
+| `JWT_SECRET` | JWT signing secret | - | **Yes** |
+| `JWT_EXPIRATION` | Token expiration | `24h` | No |
+| `OPENAI_API_KEY` | OpenAI API key | - | If using AI |
+| `ANTHROPIC_API_KEY` | Anthropic API key | - | If using AI |
+| `AI_PROVIDER` | AI provider (`openai` or `anthropic`) | `openai` | No |
+| `REDIS_HOST` | Redis host | `localhost` | No |
+| `REDIS_PORT` | Redis port | `6379` | No |
+| `CORS_ORIGIN` | Allowed CORS origins | `*` | No |
+
+---
+
+## 📁 Project Structure
+
+```
+QML/
+├── src/
+│   ├── answer/              # Answer submission & validation
+│   ├── analytics/           # Analytics & reporting
+│   ├── ai/                  # AI integration service
+│   ├── auth/                # Authentication & JWT
+│   ├── common/              # Shared utilities
+│   │   ├── decorators/      # Custom decorators
+│   │   ├── dto/             # Common DTOs
+│   │   ├── enums/           # Enumerations
+│   │   ├── filters/         # Exception filters
+│   │   ├── guards/          # Auth guards
+│   │   └── pipes/           # Validation pipes
+│   ├── config/              # Configuration
+│   ├── import-export/       # Import/export functionality
+│   ├── question/            # Question management
+│   ├── question-pool/       # Question pool management
+│   ├── questionnaire/       # Questionnaire management
+│   ├── users/               # User management
+│   ├── versioning/          # Version control
+│   ├── websocket/           # WebSocket gateway
+│   ├── app.module.ts        # Main application module
+│   └── main.ts              # Application entry point
+├── database/                # SQLite database (dev)
+├── test/                    # Test files
+├── .env.example             # Environment template
+├── docker-compose.yml       # Docker Compose config
+├── Dockerfile               # Docker build file
+├── nest-cli.json            # NestJS CLI config
+├── package.json             # Dependencies
+├── tsconfig.json            # TypeScript config
+└── README.md                # This file
+```
+
+---
+
+## 🧪 Testing
+
+```bash
+# Unit tests
+npm run test
+
+# E2E tests
+npm run test:e2e
+
+# Test coverage
+npm run test:cov
+```
+
+---
+
+## 📖 Additional Documentation
+
+- [API Capabilities](./API.md) - Detailed API capabilities and use cases
+- [Ideas & Concepts](./Ideas.md) - Original concepts and path logic design
+- [Improvements & Features](./IMPROVEMENTS_AND_FEATURES.md) - Implemented improvements
+- [AI Service Guide](./src/ai/README.md) - AI integration documentation
+- [Answer Module Guide](./src/answer/README.md) - Answer submission documentation
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Development Guidelines
+
+- Follow TypeScript best practices
+- Add tests for new features
+- Update documentation
+- Use conventional commits
+- Ensure all tests pass before submitting PR
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+---
+
+## 🙏 Acknowledgments
+
+- Built with [NestJS](https://nestjs.com/)
+- AI powered by [OpenAI](https://openai.com/) and [Anthropic](https://anthropic.com/)
+- Database management with [TypeORM](https://typeorm.io/)
+
+---
+
+## 📞 Support
+
+For issues and questions:
+- Open an issue on GitHub
+- Check the [API Documentation](http://localhost:3000/api/docs)
+- Review the [FAQ](./docs/FAQ.md)
+
+---
+
+<div align="center">
+
+**Made with ❤️ by the QML Team**
+
+[⬆ Back to Top](#qml---question-markup-language-api)
+
+</div>

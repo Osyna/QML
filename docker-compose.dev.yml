@@ -1,0 +1,22 @@
+version: '3.8'
+
+# Development override - use with: docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+
+services:
+  api:
+    build:
+      target: builder
+    command: npm run start:dev
+    volumes:
+      - ./src:/app/src
+      - ./package.json:/app/package.json
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./nest-cli.json:/app/nest-cli.json
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - DB_TYPE=sqlite
+      - DB_DATABASE=/app/database/qml_dev.db
+    ports:
+      - "3000:3000"
+      - "9229:9229"  # Debug port
